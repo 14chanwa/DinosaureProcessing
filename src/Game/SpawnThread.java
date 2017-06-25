@@ -64,7 +64,7 @@ public class SpawnThread {
 	}
 	
 	public double getXPosition() {
-		return m_gameHandler.m_currentXPosition;
+		return m_gameHandler.get_currentXPosition();
 	}
 	
 	public double getHorizonX() {

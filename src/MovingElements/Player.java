@@ -5,8 +5,8 @@ import Game.Dinosaure;
 public class Player extends MovingElement {
 
 	public Player(double _xPosition) {
-		super(_xPosition, 0.0, 10.0, 0.0);
-		set_xVelocity(Dinosaure.INITIAL_PLAYER_VELOCITY);
+		super(_xPosition, 0.0, Dinosaure.PLAYER_WEIGHT, 0.0);
+		set_xVelocity(Dinosaure.PLAYER_INITIAL_VELOCITY);
 	}
 
 	@Override

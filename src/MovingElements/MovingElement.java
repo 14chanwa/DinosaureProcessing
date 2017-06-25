@@ -44,7 +44,7 @@ public abstract class MovingElement {
 		if (m_yPosition == m_minYPosition) {
 			m_yVelocity = 0;
 		} else {
-			m_yVelocity += _dt * m_mass * 9.81;
+			m_yVelocity -= _dt * m_mass * 9.81;
 		}
 	}
 

@@ -8,14 +8,14 @@ import java.util.concurrent.TimeUnit;
 import MovingElements.CloudFactory;
 import MovingElements.MovingElement;
 import MovingElements.ObstacleFactory;
+import MovingElements.Player;
 
 
 public class GameHandler {
 	
 	public static class ElementQueue extends ConcurrentLinkedQueue<MovingElement> {};
 	
-	public double m_currentXPosition;	// Pixels
-	public double m_currentXVelocity;	// Pixels per second
+	public Player m_player;
 	
 	public double m_horizonX;
 	
@@ -31,18 +31,8 @@ public class GameHandler {
 	private final ScheduledExecutorService scheduler =
 		       Executors.newScheduledThreadPool(1);
 	
-	/**
-	 * Updates the player's X position
-	 */
-	private final Runnable m_updateXPosition = new Runnable() {
-		public void run() {
-			m_currentXPosition += Dinosaure.PLAYER_REFRESH_PERIOD_MILLISECONDS * m_currentXVelocity / 1000.0;
-		}
-	};
-	
 	public GameHandler() {
-		m_currentXPosition = 0.0;
-		m_currentXVelocity = 100.0;
+		m_player = new Player(0.0);
 		
 		m_horizonX = 100.0;
 		
@@ -57,14 +47,27 @@ public class GameHandler {
 		m_obstacleSpawnThread = new SpawnThread(0.0001, m_obstacleQueue, this, new ObstacleFactory());
 	}
 	
+	/**
+	 * Updates the player's X position
+	 */
+	private final Runnable m_updateXPosition = new Runnable() {
+		public void run() {
+			m_player.moveObject(Dinosaure.PLAYER_REFRESH_PERIOD_MILLISECONDS / 1000.0);
+		}
+	};
+	
 	public void startRoutine() {
 		scheduler.scheduleAtFixedRate(m_updateXPosition, Dinosaure.PLAYER_REFRESH_PERIOD_MILLISECONDS, Dinosaure.PLAYER_REFRESH_PERIOD_MILLISECONDS, TimeUnit.MILLISECONDS);
 		m_cloudSpawnThread.startSpawnRoutine();
-		//m_obstacleSpawnThread.startSpawnRoutine();
+		m_obstacleSpawnThread.startSpawnRoutine();
 	}
 	
 	public void set_horizonX(double _horizonX) {
 		m_horizonX = _horizonX;
+	}
+	
+	public double get_currentXPosition() {
+		return m_player.get_xPosition();
 	}
 	
 	public static void main(String[] args) {
