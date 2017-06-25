@@ -1,5 +1,11 @@
+/*
+ * Created by 14chanwa
+ * on 2017.06.25
+ */
+
 package MovingElements;
-import Game.Dinosaure;
+
+import Game.Dinosaur;
 
 public abstract class MovingElement {
 
@@ -20,6 +26,7 @@ public abstract class MovingElement {
 		set_yPosition(_yPosition);
 		set_yVelocity(0.0);
 		m_mass = _mass;
+		m_minYPosition = _minYPosition;
 	}
 
 	public MovingElement(double _xPosition, double _yPosition) {
@@ -48,7 +55,7 @@ public abstract class MovingElement {
 		}
 	}
 
-	public abstract void drawElement(Dinosaure _dinosaure, double _currentXPosition);
+	public abstract void drawElement(Dinosaur _dinosaur, double _currentXPosition);
 
 	public double get_xPosition() {
 		return m_xPosition;

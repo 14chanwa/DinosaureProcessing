@@ -1,47 +1,61 @@
+/*
+ * Created by 14chanwa
+ * on 2017.06.24
+ */
+
 package Game;
 
 import MovingElements.MovingElement;
 import processing.core.PApplet;
 
-public class Dinosaure extends PApplet {
+public class Dinosaur extends PApplet {
 
+	// Window dimensions
 	public static final int WINDOW_HEIGHT = 300;
 	public static final int WINDOW_WIDTH = 800;
-
-	public static final int PIXELS_FROM_PLAYER_TO_BORDER = 100;
 
 	// Update periods (in milliseconds)
 	public static final int PLAYER_REFRESH_PERIOD_MILLISECONDS = 1;
 	public static final int OBJECT_SPAWN_PERIOD_MILLISECONDS = 67; 
+	public static final int COLLISION_DETECTION_PERIOD_MILLISECONDS = 5; 
 
 	// Object spawn rate (lambda parameter in exponential law)
 	// Note that the effective spawn rate depends on
 	// OBJECT_SPAWN_PERIOD_MILLISECONDS (that is the rate of spawn attempts)
 	public static final double CLOUD_SPAWN_RATE = 0.0001;
 	public static final double OBSTACLE_SPAWN_RATE = 0.001;
+	public static final double MIN_DISTANCE_BETWEEN_OBSTACLES = 50.0;
+	
+	// Max altitude from which the player can jump
+	public static final int MAX_ALTITUDE_TO_JUMP = 15;
 
-	// Margins outside window
-	public static final double X_MARGIN = 20;
-
-	public static final int HORIZON_LINE_HEIGHT = 80;
+	// Drawing parameters
+	public static final double X_MARGIN = 20; 					// margins outside window
+	public static final int OFFSET_DISTANCE_TO_BORDER = 100;	// distance from left edge to player
+	public static final int HORIZON_LINE_HEIGHT = 80;			// height of the horizon on the screen
 
 	public static final double PLAYER_INITIAL_VELOCITY = 100.0;
 	public static final double PLAYER_WEIGHT = 90.0;
 	public static final double PLAYER_JUMP_VELOCITY = 350.0;
+	
+	// Player & obstacle dimensions
+	public static final int OBSTACLE_RADIUS = 20;	// x radius of the half-ellipsoid
+	public static final int OBSTACLE_HEIGHT = 30;	// y-radius of the half-ellipsoid
+	public static final int PLAYER_WIDTH = 30;		// x-radius of the ellipsoid
+	public static final int PLAYER_HEIGHT = 60;		// y-radius of the ellipsoid
 
 	// Game
-	GameHandler m_gameHandler;
+	private GameHandler m_gameHandler;
 
 	// // Containers
 	// JFrame frame;
 	// JPanel drawPanel;
 	// PSurface ps;
 
-	public Dinosaure() {
+	public Dinosaur() {
 
 		// Create GameHandler
 		m_gameHandler = new GameHandler();
-		m_gameHandler.set_horizonX(WINDOW_WIDTH);
 
 		// // Setup frame
 		// frame = new JFrame("JFrame Test");
@@ -62,7 +76,6 @@ public class Dinosaure extends PApplet {
 		// boolean isStopped = false;
 		// @Override
 		// public void actionPerformed(ActionEvent e) {
-		// // TODO Auto-generated method stub
 		// if (isStopped) {
 		// ps.resumeThread();
 		// isStopped = false;
@@ -89,9 +102,30 @@ public class Dinosaure extends PApplet {
 		// Run game
 		m_gameHandler.startRoutine();
 	}
+	
+	/**
+	 * Gets the width of the drawing surface.
+	 * @return Width
+	 */
+	public int getDrawSurface_width() {
+		return WINDOW_WIDTH; // frame.getContentPane().getSize().width;
+	}
 
+	/**
+	 * Gets the height of the drawing surface.
+	 * @return Height
+	 */
+	public int getDrawSurface_height() {
+		return WINDOW_HEIGHT; //
+	}
+
+	
+	/*
+	 * Processing methods
+	 */
+	
 	public void setup() {
-
+		noStroke();
 	}
 
 	public void settings() {
@@ -99,14 +133,6 @@ public class Dinosaure extends PApplet {
 		// frame.getContentPane().getSize().height);
 		size(getDrawSurface_width(), getDrawSurface_height());
 		// surface.setResizable(true);
-	}
-
-	public int getDrawSurface_width() {
-		return WINDOW_WIDTH; // frame.getContentPane().getSize().width;
-	}
-
-	public int getDrawSurface_height() {
-		return WINDOW_HEIGHT; //
 	}
 
 	public void draw() {
@@ -119,10 +145,9 @@ public class Dinosaure extends PApplet {
 		int horizon_line = getDrawSurface_height() - HORIZON_LINE_HEIGHT;
 		fill(100);
 		rect(0, horizon_line, WINDOW_WIDTH, horizon_line + WINDOW_HEIGHT);
-		// line(-10, horizon_line, getDrawSurface_width() + 10, horizon_line);
 
 		fill(255);
-		// Draw queues
+		// Draw element queues
 		for (GameHandler.ElementQueue queue : m_gameHandler.m_queues) {
 			for (MovingElement element : queue) {
 				element.drawElement(this, m_gameHandler.get_currentXPosition());
@@ -140,14 +165,17 @@ public class Dinosaure extends PApplet {
 
 	public void keyPressed() {
 		// System.out.println("Key pressed: " + key);
-		if (key == ' ' && m_gameHandler.m_player.get_yPosition() <= 5) {
-			m_gameHandler.m_player.set_yVelocity(PLAYER_JUMP_VELOCITY);
+		if (key == ' ') {
+			m_gameHandler.attemptJump();
 		}
 	}
 
+	/**
+	 * Launch game!
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		PApplet.main("Game.Dinosaure");
-		// new Dinosaure();
+		PApplet.main("Game.Dinosaur");
 	}
 
 }

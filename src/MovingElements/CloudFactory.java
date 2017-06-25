@@ -1,26 +1,38 @@
+/*
+ * Created by 14chanwa
+ * on 2017.06.25
+ */
+
 package MovingElements;
 
-import Game.Dinosaure;
+import Game.Dinosaur;
 
 public class CloudFactory extends MovingElementFactory {
-	
+
 	// Boundaries for cloud altitude
-	private final double MIN_CLOUD_ALTITUDE = 100.0;
-	private final double MAX_CLOUD_ALTITUDE = 150.0;
+	private final double MIN_CLOUD_ALTITUDE = 150.0;
+	private final double MAX_CLOUD_ALTITUDE = 200.0;
 
 	@Override
 	public MovingElement getNewInstance(double _xPosition) {
-		return new MovingElement(_xPosition, MIN_CLOUD_ALTITUDE + Math.random() * (MAX_CLOUD_ALTITUDE - MIN_CLOUD_ALTITUDE)) {
-			
+		return new MovingElement(_xPosition,
+				MIN_CLOUD_ALTITUDE + Math.random() * (MAX_CLOUD_ALTITUDE - MIN_CLOUD_ALTITUDE)) {
+
 			@Override
-			public void drawElement(Dinosaure _dinosaure, double _currentXPosition) {
-				int cloud_X_position = (int) Math.floor(get_xPosition() - _currentXPosition);
-				int cloud_Y_position = (int) Math
-						.floor(_dinosaure.getDrawSurface_height() - Dinosaure.HORIZON_LINE_HEIGHT - get_yPosition());
-				_dinosaure.rect(cloud_X_position - 10, cloud_Y_position - 10, 20, 20);
+			public void drawElement(Dinosaur _dinosaur, double _currentXPosition) {
+				int cloud_X_position = Dinosaur.OFFSET_DISTANCE_TO_BORDER
+						+ (int) Math.floor(get_xPosition() - _currentXPosition);
+				int cloud_Y_position = -Dinosaur.HORIZON_LINE_HEIGHT
+						+ (int) Math.floor(_dinosaur.getDrawSurface_height() - get_yPosition());
+				_dinosaur.rect(cloud_X_position - 10, cloud_Y_position - 10, 30, 20, 200);
 			}
 
 		};
+	}
+
+	@Override
+	public double getMinimumDistanceBetweenObjects() {
+		return 0;
 	}
 
 }
