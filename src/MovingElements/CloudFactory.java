@@ -15,7 +15,8 @@ public class CloudFactory extends MovingElementFactory {
 			@Override
 			public void drawElement(Dinosaure _dinosaure, double _currentXPosition) {
 				int cloud_X_position = (int) Math.floor(get_xPosition() - _currentXPosition);
-				int cloud_Y_position = (int) Math.floor(_dinosaure.getDrawSurface_height() - Dinosaure.HORIZON_LINE_HEIGHT - get_yPosition());
+				int cloud_Y_position = (int) Math
+						.floor(_dinosaure.getDrawSurface_height() - Dinosaure.HORIZON_LINE_HEIGHT - get_yPosition());
 				_dinosaure.rect(cloud_X_position - 10, cloud_Y_position - 10, 20, 20);
 			}
 
