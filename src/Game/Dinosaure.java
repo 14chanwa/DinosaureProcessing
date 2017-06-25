@@ -1,3 +1,4 @@
+package Game;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import MovingElements.MovingElement;
 import processing.awt.PSurfaceAWT.SmoothCanvas;
 import processing.core.PApplet;
 import processing.core.PSurface;
@@ -18,6 +20,14 @@ public class Dinosaure extends PApplet{
 	public static final int WINDOW_WIDTH = 800;
 	
 	public static final int PIXELS_FROM_PLAYER_TO_BORDER = 100;
+	
+	// Update period
+	public static final int PLAYER_REFRESH_PERIOD_MILLISECONDS = 5;
+	public static final int OBJECT_SPAWN_PERIOD_MILLISECONDS = 10; // in milliseconds
+		
+	// Margins outside window
+	public static final double X_MARGIN = 20;
+	
 	
 	// Game
 	GameHandler m_gameHandler;
@@ -88,35 +98,36 @@ public class Dinosaure extends PApplet{
         size(drawPanel.getSize().width, frame.getContentPane().getSize().height);
         //surface.setResizable(true);
     }
+    
+    public int getDrawSurface_width() {
+    	return frame.getContentPane().getSize().width;
+    }
+    
+    public int getDrawSurface_height() {
+    	return frame.getContentPane().getSize().height;
+    }
 
     public void draw(){	
     	
-    	int drawSurface_width = frame.getContentPane().getSize().width;
-    	int drawSurface_height = frame.getContentPane().getSize().height;
-    	
-    	
-    	surface.setSize(drawSurface_width, drawSurface_height);
+    	surface.setSize(getDrawSurface_width(), getDrawSurface_height());
         //background(0);
         //ellipse(mouseX, mouseY, 20, 20);
         background(100);
         
         // Drawing parameters
-        int horizon_line = drawSurface_height - 80;
+        int horizon_line = getDrawSurface_height() - 80;
         int player_X_position = 50;
-        int player_Y_position = drawSurface_height - 80;
+        int player_Y_position = getDrawSurface_height() - 80;
         
         // Draw horizon
-        line(-10, horizon_line, drawSurface_width + 10, horizon_line);
+        line(-10, horizon_line, getDrawSurface_width() + 10, horizon_line);
         
-        // Draw clouds
-        for (MovingElement element : m_gameHandler.m_cloudQueue) {
-        	int cloud_X_position = (int) Math.floor(element.get_xPosition() - m_gameHandler.m_currentXPosition);
-        	int cloud_Y_position = drawSurface_height - 100;
-        	rect(cloud_X_position - 10, cloud_Y_position - 10, 20, 20);
+        // Draw queues
+        for (GameHandler.ElementQueue queue : m_gameHandler.m_queues) {
+	        for (MovingElement element : queue) {
+				element.drawElement(this, m_gameHandler.m_currentXPosition);
+			}
         }
-        
-        // Draw obstacles
-        // TODO
         
         // Draw player
         ellipse(player_X_position, player_Y_position, 20, 60);
