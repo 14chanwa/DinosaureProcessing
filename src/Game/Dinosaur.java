@@ -43,6 +43,10 @@ public class Dinosaur extends PApplet {
 	public static final int OBSTACLE_HEIGHT = 30;	// y-radius of the half-ellipsoid
 	public static final int PLAYER_WIDTH = 30;		// x-radius of the ellipsoid
 	public static final int PLAYER_HEIGHT = 60;		// y-radius of the ellipsoid
+	
+	// Score toggles
+	public static final int POINTS_EARNED_FOR_SUCCESS = 1;
+	public static final int POINTS_EARNED_FOR_COLLISION = -5;
 
 	// Game
 	private GameHandler m_gameHandler;
@@ -159,7 +163,7 @@ public class Dinosaur extends PApplet {
 
 		// Draw score
 		textSize(20);
-		text("Score: " + (int) Math.floor(m_gameHandler.m_player.get_xPosition()), 10, 30);
+		text("Score: " + (int) Math.floor(m_gameHandler.m_score), 10, 30);
 
 	}
 

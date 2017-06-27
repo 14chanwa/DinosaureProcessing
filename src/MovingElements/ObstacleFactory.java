@@ -20,8 +20,20 @@ public class ObstacleFactory extends MovingElementFactory {
 						+ (int) Math.floor(get_xPosition() - _currentXPosition);
 				int obstacle_Y_position = -Dinosaur.HORIZON_LINE_HEIGHT
 						+ (int) Math.floor(_dinosaur.getDrawSurface_height() - get_yPosition());
-				_dinosaur.arc(obstacle_X_position, obstacle_Y_position, Dinosaur.OBSTACLE_RADIUS,
-						Dinosaur.OBSTACLE_HEIGHT, PApplet.PI, PApplet.TWO_PI);
+				if (get_collided()) {
+					_dinosaur.fill(255, 0, 0);
+					_dinosaur.arc(obstacle_X_position, obstacle_Y_position, Dinosaur.OBSTACLE_RADIUS,
+							Dinosaur.OBSTACLE_HEIGHT, PApplet.PI, PApplet.TWO_PI);
+					_dinosaur.fill(255);
+				} else {
+					_dinosaur.arc(obstacle_X_position, obstacle_Y_position, Dinosaur.OBSTACLE_RADIUS,
+							Dinosaur.OBSTACLE_HEIGHT, PApplet.PI, PApplet.TWO_PI);
+				}
+			}
+
+			@Override
+			public int countPoints() {
+				return (get_collided() ? Dinosaur.POINTS_EARNED_FOR_COLLISION : Dinosaur.POINTS_EARNED_FOR_SUCCESS);
 			}
 
 		};

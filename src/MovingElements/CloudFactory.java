@@ -25,6 +25,7 @@ public class CloudFactory extends MovingElementFactory {
 				int cloud_Y_position = -Dinosaur.HORIZON_LINE_HEIGHT
 						+ (int) Math.floor(_dinosaur.getDrawSurface_height() - get_yPosition());
 				_dinosaur.rect(cloud_X_position - 10, cloud_Y_position - 10, 30, 20, 200);
+
 			}
 
 		};

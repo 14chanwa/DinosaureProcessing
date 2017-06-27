@@ -27,6 +27,12 @@ public class GameHandler {
 	 * Player instance
 	 */
 	public Player m_player;
+
+	/**
+	 * Score
+	 */
+	public int m_score;
+
 	/**
 	 * List of queues of objects to be drawn
 	 */
@@ -45,6 +51,7 @@ public class GameHandler {
 	 */
 	public GameHandler() {
 		m_player = new Player(0.0);
+		m_score = 0;
 
 		m_cloudQueue = new ElementQueue();
 		m_obstacleQueue = new ElementQueue();
@@ -99,7 +106,7 @@ public class GameHandler {
 			// m_player.set_xVelocity(Dinosaur.PLAYER_INITIAL_VELOCITY +
 			// m_player.get_xPosition() / 100);
 			m_player.set_xVelocity(
-					Dinosaur.PLAYER_INITIAL_VELOCITY + 50 * Math.max(0, -2 + Math.log10(m_player.get_xPosition())));
+					Dinosaur.PLAYER_INITIAL_VELOCITY + 50 * Math.max(0, -1 + Math.log10(m_player.get_xPosition())));
 		}
 	};
 
@@ -145,7 +152,7 @@ public class GameHandler {
 
 		public void run() {
 			if (checkObstacleCollisions()) {
-				System.out.println("Collision!");
+				//System.out.println("Collision!");
 			}
 		}
 
@@ -159,7 +166,7 @@ public class GameHandler {
 			Vertex[] playerVertexes = { A, B, C, D, A, B };
 
 			for (MovingElement _obstacle : m_obstacleQueue) {
-				if (Math.abs(_obstacle.get_xPosition() - m_player.get_xPosition()) < Math
+				if (!_obstacle.get_collided() && Math.abs(_obstacle.get_xPosition() - m_player.get_xPosition()) < Math
 						.max(Dinosaur.PLAYER_WIDTH / 2.0, Dinosaur.OBSTACLE_RADIUS / 2.0)) {
 					// Obstacle vertexes
 					Vertex E = new Vertex(_obstacle.get_xPosition() + Dinosaur.OBSTACLE_RADIUS / 2.0,
@@ -169,7 +176,7 @@ public class GameHandler {
 					Vertex G = new Vertex(_obstacle.get_xPosition(),
 							_obstacle.get_yPosition() + Dinosaur.OBSTACLE_HEIGHT / 2.0);
 					Vertex[] obstacleVertexes = { E, F, G, E, F };
-					
+
 					/*
 					 * Detecting collision
 					 */
@@ -189,9 +196,11 @@ public class GameHandler {
 						}
 					}
 					if (collided) {
+						_obstacle.toggle_collided();
 						return true;
 					}
-					// Check if the bottom vertex of the diamond is in the triangle
+					// Check if the bottom vertex of the diamond is in the
+					// triangle
 					collided = true;
 					for (int i = 0; i < 3; i++) {
 						// For all possible positions, check if A is between the
@@ -205,11 +214,13 @@ public class GameHandler {
 						}
 					}
 					if (collided) {
+						_obstacle.toggle_collided();
 						return true;
 					}
 
 					/*
 					 * Box shaped detection
+					 * Should give a lot of false positives
 					 */
 					// if (G.x < m_player.get_xPosition() +
 					// Dinosaur.PLAYER_WIDTH / 2.0

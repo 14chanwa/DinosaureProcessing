@@ -18,6 +18,8 @@ public abstract class MovingElement {
 	private double m_mass;
 
 	private double m_minYPosition;
+	
+	private boolean m_collided;
 
 	// Constructor
 	public MovingElement(double _xPosition, double _yPosition, double _mass, double _minYPosition) {
@@ -27,6 +29,7 @@ public abstract class MovingElement {
 		set_yVelocity(0.0);
 		m_mass = _mass;
 		m_minYPosition = _minYPosition;
+		m_collided = false;
 	}
 
 	public MovingElement(double _xPosition, double _yPosition) {
@@ -87,5 +90,21 @@ public abstract class MovingElement {
 
 	public void set_yVelocity(double _yVelocity) {
 		m_yVelocity = _yVelocity;
+	}
+	
+	public boolean get_collided() {
+		return m_collided;
+	}
+	
+	public void set_collided(boolean _collided) {
+		m_collided = _collided;
+	}
+	
+	public void toggle_collided() {
+		m_collided = !m_collided;
+	}
+	
+	public int countPoints() {
+		return 0;
 	}
 }

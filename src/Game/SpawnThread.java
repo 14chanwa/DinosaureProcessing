@@ -31,6 +31,7 @@ public class SpawnThread {
 			// Remove objects beyond boundaries
 			double _inferior_boundary = getXPosition() - Dinosaur.X_MARGIN - Dinosaur.OFFSET_DISTANCE_TO_BORDER;
 			while (!m_queue.isEmpty() && m_queue.element().get_xPosition() < _inferior_boundary) {
+				m_gameHandler.m_score += m_queue.element().countPoints();
 				m_queue.remove();
 			}
 
