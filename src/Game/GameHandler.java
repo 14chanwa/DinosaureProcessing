@@ -103,6 +103,16 @@ public class GameHandler {
 	private final Runnable m_updateXPosition = new Runnable() {
 		public void run() {
 			m_player.moveObject(Dinosaur.PLAYER_REFRESH_PERIOD_MILLISECONDS / 1000.0);
+			try {
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			for (ElementQueue _queue : m_queues) {
+				for (MovingElement _element : _queue) {
+					_element.moveObject(Dinosaur.PLAYER_REFRESH_PERIOD_MILLISECONDS / 1000.0); 
+				}
+			}
 			// m_player.set_xVelocity(Dinosaur.PLAYER_INITIAL_VELOCITY +
 			// m_player.get_xPosition() / 100);
 			m_player.set_xVelocity(

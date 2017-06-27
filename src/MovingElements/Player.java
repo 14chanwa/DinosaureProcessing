@@ -21,7 +21,58 @@ public class Player extends MovingElement {
 				.floor(_dinosaur.getDrawSurface_height() - Dinosaur.HORIZON_LINE_HEIGHT - get_yPosition());
 
 		// Draw player
-		_dinosaur.ellipse(player_X_position, player_Y_position, Dinosaur.PLAYER_WIDTH, Dinosaur.PLAYER_HEIGHT);
+		_dinosaur.translate(player_X_position, player_Y_position - (int) (0.2 * Dinosaur.PLAYER_HEIGHT));
+		_dinosaur.rotate((float) (Math.PI/6.0));
+		
+		// Draw main ellipse
+		_dinosaur.ellipse(0, 0, (int)(0.7 * Dinosaur.PLAYER_WIDTH), (int)(0.9 * Dinosaur.PLAYER_HEIGHT));
+		
+		_dinosaur.translate((int)(0.1 * Dinosaur.PLAYER_WIDTH), (int)(- 0.6 * Dinosaur.PLAYER_HEIGHT));
+		_dinosaur.rotate((float) (2 * Math.PI/6.0));
+		
+		// Draw head
+		if (get_yPosition() > 0) {	
+			_dinosaur.rotate((float) (Math.PI/5.0));
+			_dinosaur.translate(0, (int)(- 0.1 * Dinosaur.PLAYER_HEIGHT));
+		}
+		_dinosaur.ellipse(0, 0, (int)(0.5 * Dinosaur.PLAYER_WIDTH), (int)(0.4 * Dinosaur.PLAYER_HEIGHT));
+		if (get_yPosition() > 0) {
+			_dinosaur.translate(0, (int)( 0.1 * Dinosaur.PLAYER_HEIGHT));
+			_dinosaur.rotate(-(float) (Math.PI/5.0));
+		}
+		
+		_dinosaur.rotate(-(float) (2 * Math.PI/6.0));
+		_dinosaur.translate((int)(-0.1 * Dinosaur.PLAYER_WIDTH), (int)(0.5 * Dinosaur.PLAYER_HEIGHT));
+		
+		
+		_dinosaur.translate((int)(-0.1 * Dinosaur.PLAYER_WIDTH), (int)(0.55 * Dinosaur.PLAYER_HEIGHT));
+		_dinosaur.rotate(-(float) (Math.PI/6.0));
+		
+		
+		_dinosaur.translate((int)(0.5 * Dinosaur.PLAYER_WIDTH), 0);
+		
+		// Draw feet
+		if (get_yPosition() > 0) {
+			_dinosaur.rotate(-(float) (Math.PI/4.0));
+		}
+		_dinosaur.ellipse(0, 0, (int)(0.2 * Dinosaur.PLAYER_WIDTH), (int)(0.2 * Dinosaur.PLAYER_HEIGHT));
+		if (get_yPosition() > 0) {
+			_dinosaur.rotate((float) (Math.PI/4.0));
+		}
+		
+		_dinosaur.translate(-(int)(0.5 * Dinosaur.PLAYER_WIDTH), 0);
+		
+		_dinosaur.rotate((float) (Math.PI/6.0));
+		_dinosaur.translate((int)(0.1 * Dinosaur.PLAYER_WIDTH), (int)(- 0.55 * Dinosaur.PLAYER_HEIGHT));
+		
+		_dinosaur.rotate(-(float) (Math.PI/6.0));
+		
+		// Draw tail
+		_dinosaur.translate(-(int)(0.6 * Dinosaur.PLAYER_WIDTH), (int)(0.2 * Dinosaur.PLAYER_HEIGHT));
+		_dinosaur.ellipse(0, 0, (int)(0.5 * Dinosaur.PLAYER_WIDTH), (int)(0.1 * Dinosaur.PLAYER_HEIGHT));
+		_dinosaur.translate((int)(0.6 * Dinosaur.PLAYER_WIDTH), -(int)(0.2 * Dinosaur.PLAYER_HEIGHT));
+		
+		_dinosaur.translate(-player_X_position, -player_Y_position + (int) (0.2 * Dinosaur.PLAYER_HEIGHT));
 	}
 
 }

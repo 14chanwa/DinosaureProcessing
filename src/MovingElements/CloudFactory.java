@@ -10,13 +10,12 @@ import Game.Dinosaur;
 public class CloudFactory extends MovingElementFactory {
 
 	// Boundaries for cloud altitude
-	private final double MIN_CLOUD_ALTITUDE = 150.0;
-	private final double MAX_CLOUD_ALTITUDE = 200.0;
+	
 
 	@Override
 	public MovingElement getNewInstance(double _xPosition) {
-		return new MovingElement(_xPosition,
-				MIN_CLOUD_ALTITUDE + Math.random() * (MAX_CLOUD_ALTITUDE - MIN_CLOUD_ALTITUDE)) {
+		MovingElement _movingElement = new MovingElement(_xPosition,
+				Dinosaur.MIN_CLOUD_ALTITUDE + Math.random() * (Dinosaur.MAX_CLOUD_ALTITUDE - Dinosaur.MIN_CLOUD_ALTITUDE)) {
 
 			@Override
 			public void drawElement(Dinosaur _dinosaur, double _currentXPosition) {
@@ -29,6 +28,8 @@ public class CloudFactory extends MovingElementFactory {
 			}
 
 		};
+		_movingElement.set_xVelocity(Dinosaur.CLOUD_VELOCITY_MIN + Math.random() * (Dinosaur.CLOUD_VELOCITY_MAX - Dinosaur.CLOUD_VELOCITY_MIN));
+		return _movingElement;
 	}
 
 	@Override

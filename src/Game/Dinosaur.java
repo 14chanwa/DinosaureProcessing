@@ -24,7 +24,7 @@ public class Dinosaur extends PApplet {
 	// OBJECT_SPAWN_PERIOD_MILLISECONDS (that is the rate of spawn attempts)
 	public static final double CLOUD_SPAWN_RATE = 0.0001;
 	public static final double OBSTACLE_SPAWN_RATE = 0.001;
-	public static final double MIN_DISTANCE_BETWEEN_OBSTACLES = 50.0;
+	public static final double MIN_DISTANCE_BETWEEN_OBSTACLES = 75.0;
 	
 	// Max altitude from which the player can jump
 	public static final int MAX_ALTITUDE_TO_JUMP = 15;
@@ -35,8 +35,14 @@ public class Dinosaur extends PApplet {
 	public static final int HORIZON_LINE_HEIGHT = 80;			// height of the horizon on the screen
 
 	public static final double PLAYER_INITIAL_VELOCITY = 100.0;
-	public static final double PLAYER_WEIGHT = 90.0;
+	public static final double PLAYER_WEIGHT = 120.0;
 	public static final double PLAYER_JUMP_VELOCITY = 350.0;
+	
+	public static final double MIN_CLOUD_ALTITUDE = 125.0;
+	public static final double MAX_CLOUD_ALTITUDE = 175.0;
+	
+	public static final double CLOUD_VELOCITY_MIN = 75;
+	public static final double CLOUD_VELOCITY_MAX = 75;
 	
 	// Player & obstacle dimensions
 	public static final int OBSTACLE_RADIUS = 20;	// x radius of the half-ellipsoid
@@ -143,7 +149,7 @@ public class Dinosaur extends PApplet {
 
 		// surface.setSize(getDrawSurface_width(), getDrawSurface_height());
 		// ellipse(mouseX, mouseY, 20, 20);
-		background(150);
+		background(160);
 
 		// Draw horizon
 		int horizon_line = getDrawSurface_height() - HORIZON_LINE_HEIGHT;
