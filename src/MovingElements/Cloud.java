@@ -1,6 +1,6 @@
 package MovingElements;
 
-import Game.Dinosaure;
+import Game.Dinosaur;
 
 public class Cloud extends MovingElement {
 
@@ -10,7 +10,7 @@ public class Cloud extends MovingElement {
 	}
 
 	@Override
-	public void drawElement(Dinosaure _dinosaure, double _currentXPosition) {
+	public void drawElement(Dinosaur _dinosaure, double _currentXPosition) {
 		int cloud_X_position = (int) Math.floor(get_xPosition() - _currentXPosition);
 		int cloud_Y_position = _dinosaure.getDrawSurface_height() - 100;
 		_dinosaure.rect(cloud_X_position - 10, cloud_Y_position - 10, 20, 20);

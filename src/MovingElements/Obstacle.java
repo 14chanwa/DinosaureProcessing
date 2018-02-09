@@ -1,6 +1,6 @@
 package MovingElements;
 
-import Game.Dinosaure;
+import Game.Dinosaur;
 
 public class Obstacle extends MovingElement {
 
@@ -10,7 +10,7 @@ public class Obstacle extends MovingElement {
 	}
 
 	@Override
-	void drawElement(Dinosaure _dinosaure, double _currentXPosition) {
+	public void drawElement(Dinosaur _dinosaure, double _currentXPosition) {
 		// TODO Auto-generated method stub
 		
 	}
